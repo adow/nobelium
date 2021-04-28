@@ -12,12 +12,12 @@ const BLOG = {
   path: '', // leave this empty unless you want to deploy Nobelium in a folder
   since: 2021, // if leave this empty, current year will be used.
   postsPerPage: 20,
-  sortByDate: false,
+  sortByDate: true,
   showAbout: true, // WIP
   showArchive: true, // WIP
   socialLink: 'https://twitter.com/reynoldqin',
   seo: {
-    keywords: ['Blog', 'Website', 'Notion'],
+    keywords: ['Blog', 'Python', 'Notion', 'Swift', 'Javascript'],
     googleSiteVerification: 'vTaWd72F_kJY6mNbfoCQuutuGdH1kSsg7o3F31b3wgg' // Remove the value or replace it with your own google site verification code
   },
   notionPageId: process.env.NOTION_PAGE_ID, // DO NOT CHANGE THIS！！！
