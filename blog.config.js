@@ -3,7 +3,7 @@ const BLOG = {
   author: 'adow',
   email: 'adow@reynoldqin@gmail.com',
   link: 'https://www.codingnext.com',
-  description: 'adow blogs',
+  description: '',
   lang: 'en-US',
   appearance: 'auto', // ['light', 'dark', 'auto'],
   font: 'sans-serif', // ['sans-serif', 'serif']
