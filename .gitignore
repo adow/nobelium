@@ -34,3 +34,5 @@ yarn-error.log*
 .vercel
 *.swp
 *.swo
+public/robots.txt
+public/sitemap.xml

@@ -1,6 +1,28 @@
 module.exports = {
-  future: {
-    webpack5: true
+  webpack5: true,
+  images: {
+    domains: ['gravatar.com']
+  },
+  eslint: {
+    dirs: [
+      'components',
+      'layouts',
+      'lib',
+      'pages'
+    ]
+  },
+  async headers () {
+    return [
+      {
+        source: '/:path*{/}?',
+        headers: [
+          {
+            key: 'Permissions-Policy',
+            value: 'interest-cohort=()'
+          }
+        ]
+      }
+    ]
   },
   webpack: (config, { dev, isServer }) => {
     // Replace React with Preact only in client production build
