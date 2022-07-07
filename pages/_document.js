@@ -2,19 +2,20 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
 import CJK from '@/lib/cjk'
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps (ctx) {
     const initialProps = await Document.getInitialProps(ctx)
     return { ...initialProps }
   }
 
-  render() {
+  render () {
     return (
       <Html
         lang={BLOG.lang}
         className={BLOG.appearance === 'dark' ? 'dark' : undefined}
       >
         <Head>
-          {BLOG.font && BLOG.font === 'serif' ? (
+          {BLOG.font && BLOG.font === 'serif'
+            ? (
             <>
               <link
                 rel="preload"
@@ -31,24 +32,25 @@ class MyDocument extends Document {
                 crossOrigin="anonymous"
               />
             </>
-          ) : (
+              )
+            : (
             <>
               <link
                 rel="preload"
-                href="/fonts/Inter.var.woff2"
+                href="/fonts/IBMPlexSansVar-Roman.woff2"
                 as="font"
                 type="font/woff2"
                 crossOrigin="anonymous"
               />
               <link
                 rel="preload"
-                href="/fonts/Inter-Italic.var.woff2"
+                href="/fonts/IBMPlexSansVar-Italic.woff2"
                 as="font"
                 type="font/woff2"
                 crossOrigin="anonymous"
               />
             </>
-          )}
+              )}
 
           {['zh', 'ja', 'ko'].includes(
             BLOG.lang.slice(0, 2).toLocaleLowerCase()
@@ -82,37 +84,21 @@ class MyDocument extends Document {
               </noscript>
             </>
           )}
-
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
           <link rel="icon" href="/favicon.ico" />
-          <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
-          {BLOG.analytics && BLOG.analytics.provider === 'ackee' && (
-            <script
-              async
-              src={BLOG.analytics.ackeeConfig.tracker}
-              data-ackee-server={BLOG.analytics.ackeeConfig.dataAckeeServer}
-              data-ackee-domain-id={BLOG.analytics.ackeeConfig.domainId}
-            ></script>
-          )}
-          {BLOG.analytics && BLOG.analytics.provider === 'ga' && (
+          <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png"></link>
+          <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/feed"></link>
+          {BLOG.appearance === 'auto'
+            ? (
             <>
-              <script
-                async
-                src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.analytics.gaConfig.measurementId}`}
-              />
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${BLOG.analytics.gaConfig.measurementId}', {
-              page_path: window.location.pathname,
-            });
-          `
-                }}
-              />
+            <meta name="theme-color" content={BLOG.lightBackground} media="(prefers-color-scheme: light)"/>
+            <meta name="theme-color" content={BLOG.darkBackground} media="(prefers-color-scheme: dark)"/>
             </>
-          )}
+              )
+            : (
+            <meta name="theme-color" content={BLOG.appearance === 'dark' ? BLOG.darkBackground : BLOG.lightBackground} />
+              )
+          }
         </Head>
         <body className="bg-day dark:bg-night">
           <Main />

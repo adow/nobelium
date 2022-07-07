@@ -33,15 +33,18 @@ const NavBar = () => {
 }
 
 const Header = ({ navBarTitle, fullWidth }) => {
+  const useSticky = !BLOG.autoCollapsedNavBar
   const navRef = useRef(null)
   const sentinalRef = useRef([])
   const handler = ([entry]) => {
-    if (navRef && navRef.current) {
+    if (navRef && navRef.current && useSticky) {
       if (!entry.isIntersecting && entry !== undefined) {
-        navRef.current.classList.add('sticky-nav-full')
+        navRef.current?.classList.add('sticky-nav-full')
       } else {
-        navRef.current.classList.remove('sticky-nav-full')
+        navRef.current?.classList.remove('sticky-nav-full')
       }
+    } else {
+      navRef.current?.classList.add('remove-sticky')
     }
   }
   useEffect(() => {
@@ -51,6 +54,7 @@ const Header = ({ navBarTitle, fullWidth }) => {
     // return () => {
     //   if (sentinalRef.current) obvserver.unobserve(sentinalRef.current)
     // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sentinalRef])
   return (
     <>
@@ -64,15 +68,9 @@ const Header = ({ navBarTitle, fullWidth }) => {
       >
         <div className="flex items-center">
           <Link href="/">
-            <div className="h-6">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
+            <a aria-label={BLOG.title}>
+              <div className="h-6">
+                <svg
                   width="24"
                   height="24"
                 />
@@ -88,19 +86,21 @@ const Header = ({ navBarTitle, fullWidth }) => {
                     <stop offset="100%" stopColor = "rgb(239, 98, 159)"></stop>
                   </radialGradient>
                 </defs>
-              </svg>
             </div>
+          </a>
           </Link>
-          {navBarTitle ? (
+          {navBarTitle
+            ? (
             <p className="ml-2 font-medium text-day dark:text-night header-name">
               {navBarTitle}
             </p>
-          ) : (
+              )
+            : (
             <p className="ml-2 font-medium text-day dark:text-night header-name">
               {BLOG.title},{' '}
               <span className="font-normal">{BLOG.description}</span>
             </p>
-          )}
+              )}
         </div>
         <NavBar />
       </div>
